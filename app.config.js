@@ -1,4 +1,6 @@
-{
+import "dotenv/config";
+
+export default {
   "expo": {
     "name": "console-log-app",
     "slug": "console-log-app",
