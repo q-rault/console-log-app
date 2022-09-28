@@ -6,7 +6,10 @@ import LoginScreen from './screens/LoginScreen';
 import ProjectsScreen from './screens/ProjectsScreen';
 import TicketsScreen from './screens/TicketsScreen';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Icon } from '@expo/vector-icons/build/createIconSet';
+
+type Props = {
+  IoniconName: keyof typeof Ionicons.glyphMap;
+}
 
 const Tab = createBottomTabNavigator();
 
@@ -16,7 +19,7 @@ export default function App() {
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
+            let iconName: Props['IoniconName'] | undefined;
             if (route.name === 'Home') {
               iconName = focused ? 'home' : 'home-outline';
             } else if (route.name === 'Login') {
@@ -26,10 +29,9 @@ export default function App() {
             } else if (route.name === 'Tickets') {
               iconName = focused ? 'clipboard' : 'clipboard-outline';
             }
-            return <Ionicons
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-            name={iconName} size={size} color={color} />;
+            if (iconName) {
+              return <Ionicons name={iconName} size={size} color={color} />;
+            }
           },
           tabBarStyle: { position: 'absolute' },
         })}
